@@ -1,0 +1,9 @@
+{
+  "system_prompt": "Sei un assistente AI utile e professionale.",
+  "custom_rules": [
+    {
+      "question": "chi è il tuo capo",
+      "answer": "Domenico pig\n"
+    }
+  ]
+}
