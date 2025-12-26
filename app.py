@@ -49,7 +49,7 @@ def build_system_message():
 
 # SIDEBAR
 with st.sidebar:
-    st.title("💬 Chat Assistant")
+    st.title("💬 Chattami")
     
     tab1, tab2 = st.tabs(["Conversazioni", "⚙️ Istruzioni"])
     
