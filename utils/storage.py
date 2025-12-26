@@ -1,6 +1,12 @@
 import json
 import os
-from config import DATA_DIR, CONVERSATIONS_FILE, INSTRUCTIONS_FILE, DEFAULT_SYSTEM_PROMPT
+from config import (
+    DATA_DIR, 
+    CONVERSATIONS_FILE, 
+    INSTRUCTIONS_FILE, 
+    DEFAULT_SYSTEM_PROMPT,
+    DEFAULT_CUSTOM_RULES  # ← AGGIUNGI
+)
 
 class Storage:
     @staticmethod
@@ -32,9 +38,10 @@ class Storage:
         if os.path.exists(INSTRUCTIONS_FILE):
             with open(INSTRUCTIONS_FILE, 'r', encoding='utf-8') as f:
                 return json.load(f)
+        # ← CAMBIATO: Usa regole predefinite dal config
         return {
             "system_prompt": DEFAULT_SYSTEM_PROMPT,
-            "custom_rules": []
+            "custom_rules": DEFAULT_CUSTOM_RULES  # ← USA REGOLE DA CONFIG
         }
     
     @staticmethod
