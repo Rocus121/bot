@@ -29,7 +29,7 @@ DEFAULT_CUSTOM_RULES = [
     },
     {
     
-        "question": "Chi sarà il sinnico di Sracen",
+        "question": "Chi sarà il sindaco di Sracena",
         "answer": "Il sinnico di saracena sarà Domenico Pig Viola il figlio di Loredana"
     },
 

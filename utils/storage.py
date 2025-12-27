@@ -5,7 +5,7 @@ from config import (
     CONVERSATIONS_FILE, 
     INSTRUCTIONS_FILE, 
     DEFAULT_SYSTEM_PROMPT,
-    DEFAULT_CUSTOM_RULES  # ← AGGIUNGI
+    DEFAULT_CUSTOM_RULES
 )
 
 class Storage:
@@ -33,20 +33,18 @@ class Storage:
     
     @staticmethod
     def load_instructions():
-        """Carica istruzioni agente da JSON"""
+        """Carica istruzioni SEMPRE da config.py"""
         Storage.ensure_data_dir()
-        if os.path.exists(INSTRUCTIONS_FILE):
-            with open(INSTRUCTIONS_FILE, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        # ← CAMBIATO: Usa regole predefinite dal config
+        
+        # IGNORA il file JSON, usa SEMPRE config.py
         return {
             "system_prompt": DEFAULT_SYSTEM_PROMPT,
-            "custom_rules": DEFAULT_CUSTOM_RULES  # ← USA REGOLE DA CONFIG
+            "custom_rules": DEFAULT_CUSTOM_RULES
         }
     
     @staticmethod
     def save_instructions(instructions):
-        """Salva istruzioni agente su JSON"""
+        """Salva istruzioni su JSON (ma non verranno usate)"""
         Storage.ensure_data_dir()
         with open(INSTRUCTIONS_FILE, 'w', encoding='utf-8') as f:
             json.dump(instructions, f, indent=2, ensure_ascii=False)
