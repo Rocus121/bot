@@ -33,18 +33,33 @@ class Storage:
     
     @staticmethod
     def load_instructions():
-        """Carica istruzioni SEMPRE da config.py"""
+        """Carica istruzioni: config.py (backend) + JSON (frontend extra)"""
         Storage.ensure_data_dir()
         
-        # IGNORA il file JSON, usa SEMPRE config.py
+        # Carica regole EXTRA dal JSON (create dall'interfaccia)
+        extra_rules = []
+        if os.path.exists(INSTRUCTIONS_FILE):
+            with open(INSTRUCTIONS_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                extra_rules = data.get("custom_rules", [])
+        
+        # Ritorna: regole backend + regole frontend EXTRA
         return {
             "system_prompt": DEFAULT_SYSTEM_PROMPT,
-            "custom_rules": DEFAULT_CUSTOM_RULES
+            "backend_rules": DEFAULT_CUSTOM_RULES,  # Invisibili nell'interfaccia
+            "custom_rules": extra_rules  # Visibili e modificabili
         }
     
     @staticmethod
     def save_instructions(instructions):
-        """Salva istruzioni su JSON (ma non verranno usate)"""
+        """Salva solo le regole EXTRA (non quelle backend)"""
         Storage.ensure_data_dir()
+        
+        # Salva solo custom_rules (quelle aggiunte dall'interfaccia)
+        to_save = {
+            "system_prompt": instructions["system_prompt"],
+            "custom_rules": instructions.get("custom_rules", [])
+        }
+        
         with open(INSTRUCTIONS_FILE, 'w', encoding='utf-8') as f:
-            json.dump(instructions, f, indent=2, ensure_ascii=False)
+            json.dump(to_save, f, indent=2, ensure_ascii=False)

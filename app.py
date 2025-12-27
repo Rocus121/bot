@@ -38,11 +38,15 @@ def new_conversation():
 
 def build_system_message():
     base = st.session_state.instructions["system_prompt"]
-    rules = st.session_state.instructions["custom_rules"]
     
-    if rules:
+    # SOMMA regole backend + regole frontend
+    backend_rules = st.session_state.instructions.get("backend_rules", [])
+    frontend_rules = st.session_state.instructions.get("custom_rules", [])
+    all_rules = backend_rules + frontend_rules
+    
+    if all_rules:
         rules_text = "\n\nRegole specifiche:\n" + "\n".join(
-            [f"- {r['question']}: {r['answer']}" for r in rules]
+            [f"- {r['question']}: {r['answer']}" for r in all_rules]
         )
         return base + rules_text
     return base
